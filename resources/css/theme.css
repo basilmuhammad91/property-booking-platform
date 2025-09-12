@@ -1,0 +1,93 @@
+:root {
+  /* Primary Brand Colors */
+  --color-primary: #FF5A5F; /* Airbnb coral */
+  --color-primary-light: #FF8B8F; /* Light coral for backgrounds */
+  --color-primary-dark: #E03E44; /* Darker coral for hover */
+  --color-secondary: #00A699; /* Teal accent from Airbnb */
+
+  /* Background Colors */
+  --color-background: #F7F7F7; /* Main background */
+  --color-background-alt: #FFFFFF; /* Card/component backgrounds */
+  --color-background-gradient: linear-gradient(135deg, #F7F7F7 0%, #FFECEB 50%, #FFD6D6 100%);
+  --color-background-subtle: rgba(255, 90, 95, 0.08); /* Subtle glass effect */
+
+  /* Text Colors */
+  --color-text: #484848; /* Primary text */
+  --color-text-secondary: #767676; /* Secondary text */
+  --color-text-muted: #A0A0A0; /* Muted text */
+  --color-text-light: #C0C0C0; /* Very light text */
+
+  /* Gradient Colors */
+  --gradient-primary: linear-gradient(135deg, #FF5A5F 0%, #FF8B8F 100%);
+  --gradient-secondary: linear-gradient(135deg, #00A699 0%, #00C4B4 100%);
+  --gradient-accent: linear-gradient(135deg, #E03E44 0%, #FF5A5F 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(255, 90, 95, 0.08) 0%, rgba(255, 139, 143, 0.05) 100%);
+
+  /* Border Colors */
+  --color-border: #E0E0E0;
+  --color-border-light: rgba(224, 224, 224, 0.5);
+  --color-border-focus: rgba(255, 90, 95, 0.3);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-primary: 0 10px 15px -3px rgba(255, 90, 95, 0.2), 0 4px 6px -2px rgba(255, 90, 95, 0.1);
+  --shadow-primary-lg: 0 20px 25px -5px rgba(255, 90, 95, 0.15), 0 10px 10px -5px rgba(255, 90, 95, 0.1);
+
+  /* Interactive States */
+  --color-hover-overlay: rgba(255, 90, 95, 0.08);
+  --color-active-overlay: rgba(255, 90, 95, 0.12);
+  --color-focus-ring: rgba(255, 90, 95, 0.2);
+
+  /* Component Specific */
+  --card-background: rgba(255, 255, 255, 0.9);
+  --card-backdrop: blur(12px);
+  --nav-background: rgba(255, 255, 255, 0.95);
+  --pagination-background: rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="dark"] {
+  --color-primary: #FF8B8F;
+  --color-primary-light: #FFB2B5;
+  --color-primary-dark: #E03E44;
+  --color-secondary: #00C4B4;
+
+  --color-background: #1B1B1B;
+  --color-background-alt: #2C2C2C;
+  --color-background-gradient: linear-gradient(135deg, #1B1B1B 0%, #2C2C2C 50%, #3D3D3D 100%);
+  --color-background-subtle: rgba(255, 90, 95, 0.08);
+
+  --color-text: #F7F7F7;
+  --color-text-secondary: #C0C0C0;
+  --color-text-muted: #8C8C8C;
+  --color-text-light: #6D6D6D;
+
+  --gradient-primary: linear-gradient(135deg, #FF8B8F 0%, #FFB2B5 100%);
+  --gradient-secondary: linear-gradient(135deg, #00C4B4 0%, #00E1D3 100%);
+  --gradient-accent: linear-gradient(135deg, #E03E44 0%, #FF5A5F 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(255, 139, 143, 0.12) 0%, rgba(255, 90, 95, 0.08) 100%);
+
+  --color-border: #3D3D3D;
+  --color-border-light: rgba(61, 61, 61, 0.5);
+  --color-border-focus: rgba(255, 90, 95, 0.3);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  --shadow-primary: 0 10px 15px -3px rgba(255, 90, 95, 0.3), 0 4px 6px -2px rgba(255, 90, 95, 0.15);
+  --shadow-primary-lg: 0 20px 25px -5px rgba(255, 90, 95, 0.25), 0 10px 10px -5px rgba(255, 90, 95, 0.15);
+
+  --color-hover-overlay: rgba(255, 90, 95, 0.12);
+  --color-active-overlay: rgba(255, 90, 95, 0.18);
+  --color-focus-ring: rgba(255, 90, 95, 0.3);
+
+  --card-background: rgba(44, 44, 44, 0.9);
+  --card-backdrop: blur(12px);
+  --nav-background: rgba(27, 27, 27, 0.95);
+  --pagination-background: rgba(44, 44, 44, 0.85);
+}
