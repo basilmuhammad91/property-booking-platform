@@ -6,6 +6,7 @@ import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "ziggy-js";
+import axios from "axios";
 
 const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary')?.trim() || '#ef4444';
 

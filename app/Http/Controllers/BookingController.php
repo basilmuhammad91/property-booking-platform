@@ -52,31 +52,24 @@ class BookingController extends Controller
     {
         logger("storing booking...");
 
-        // try {
-        $validated = $request->validate([
-            'property_id' => ['required', 'exists:properties,id'],
-            'start_date' => ['required', 'date', 'after_or_equal:today'],
-            'end_date' => ['required', 'date', 'after:start_date'],
-        ]);
+        try {
+            $validated = $request->validate([
+                'property_id' => ['required', 'exists:properties,id'],
+                'start_date' => ['required', 'date', 'after_or_equal:today'],
+                'end_date' => ['required', 'date', 'after:start_date'],
+            ]);
 
-        $booking = $this->bookingService->createBooking(
-            auth()->user(),
-            $validated['property_id'],
-            $validated
-        );
+            $booking = $this->bookingService->createBooking(
+                auth()->user(),
+                $validated['property_id'],
+                $validated
+            );
 
-        return response()->json([
-            'message' => 'Booking created successfully',
-            'data' => new BookingResource($booking),
-        ], 201);
-        // } catch (BookingException $e) {
-        //     return response()->json([
-        //         'message' => $e->getMessage(),
-        //     ], 422);
-        // }
+            return redirect()->back()->with('success', 'Booking created successfully');
+        } catch (BookingException $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
-
-
 
     public function show(Booking $booking): JsonResponse
     {

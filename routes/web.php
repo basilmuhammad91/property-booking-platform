@@ -46,10 +46,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/properties', [AdminPropertyController::class, 'index'])->name('properties.index');
     });
 
+    Route::resource('bookings', BookingController::class);
+
 });
 
-
-    Route::resource('bookings', BookingController::class);
 // Public Property Routes
 Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
 Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');

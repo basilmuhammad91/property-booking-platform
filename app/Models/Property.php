@@ -60,7 +60,7 @@ class Property extends Model
             ->exists();
 
         $existingBookings = $this->bookings()
-            ->whereIn('status', ['confirmed', 'pending'])
+            ->whereIn('status', ['confirmed'])
             ->where(function ($query) use ($start, $end) {
                 $query->whereBetween('start_date', [$start, $end])
                     ->orWhereBetween('end_date', [$start, $end])

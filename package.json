@@ -24,6 +24,7 @@
         "@inertiajs/react": "^2.1.5",
         "@inertiajs/vue3": "^2.0.14",
         "@vitejs/plugin-react": "^5.0.2",
+        "framer-motion": "^12.23.12",
         "react": "^19.1.1",
         "react-dom": "^19.1.1",
         "vue": "^3.5.17",
