@@ -24,7 +24,7 @@ export default function Register() {
           <div className="flex justify-center mb-6">
             <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary">
               <svg
-                className="w-7 h-7 text-white"
+                className="text-white w-7 h-7"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -34,7 +34,7 @@ export default function Register() {
           </div>
           <h2 className="text-3xl font-bold text-text">Create your account</h2>
           <p className="mt-2 text-sm text-gray-600">
-            Join SAGAN and start your journey
+            Join Booking Platform and start your journey
           </p>
         </div>
 
@@ -148,7 +148,7 @@ export default function Register() {
               checked={data.terms}
               onChange={(e) => setData("terms", e.target.checked)}
               required
-              className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+              className="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
             />
             <label
               htmlFor="terms"
@@ -157,14 +157,14 @@ export default function Register() {
               I agree to the{" "}
               <Link
                 href="/terms"
-                className="text-primary hover:text-primary/80 underline"
+                className="underline text-primary hover:text-primary/80"
               >
                 Terms of Service
               </Link>{" "}
               and{" "}
               <Link
                 href="/privacy"
-                className="text-primary hover:text-primary/80 underline"
+                className="underline text-primary hover:text-primary/80"
               >
                 Privacy Policy
               </Link>
@@ -176,7 +176,7 @@ export default function Register() {
             <button
               type="submit"
               disabled={processing}
-              className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-primary border border-transparent rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white transition-colors duration-200 border border-transparent rounded-md bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {processing ? "Creating account..." : "Create account"}
             </button>
@@ -186,7 +186,7 @@ export default function Register() {
           <div className="text-center">
             <Link
               href="/login"
-              className="font-medium text-primary hover:text-primary/80 transition-colors duration-200"
+              className="font-medium transition-colors duration-200 text-primary hover:text-primary/80"
             >
               Already have an account? <span className="underline">Sign in</span>
             </Link>
