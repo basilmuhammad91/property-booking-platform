@@ -58,14 +58,14 @@ export default function GuestHeader() {
             <Link
                 href="/login"
                 onClick={close(setMobileMenuOpen)}
-                className="font-medium text-text hover:text-primary transition-colors duration-200"
+                className="font-medium transition-colors duration-200 text-text hover:text-primary"
             >
                 Login
             </Link>
             <Link
                 href="/register"
                 onClick={close(setMobileMenuOpen)}
-                className="flex items-center px-4 py-2 font-medium text-white rounded-md bg-primary hover:bg-primary transition-colors duration-200"
+                className="flex items-center px-4 py-2 font-medium text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary"
             >
                 <span>Start</span>
                 <svg
@@ -87,7 +87,7 @@ export default function GuestHeader() {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={toggle(setUserDropdownOpen)}
-                className="flex items-center px-3 py-2 space-x-2 font-medium rounded-md text-text hover:text-primary hover:bg-gray-50 transition-colors duration-200"
+                className="flex items-center px-3 py-2 space-x-2 font-medium transition-colors duration-200 rounded-md text-text hover:text-primary hover:bg-gray-50"
             >
                 <div className="flex items-center justify-center w-8 h-8 text-sm font-medium text-white rounded-full bg-primary">
                     {getUserInitials(user.name)}
@@ -115,12 +115,12 @@ export default function GuestHeader() {
                         <div className="font-medium">{user.name}</div>
                         <div className="text-gray-500">{user.email}</div>
                     </div>
-                    {["/My Bookings", "/dashboard", "/settings"].map((href) => (
+                    {["/bookings", "/dashboard", "/settings"].map((href) => (
                         <Link
                             key={href}
                             href={href}
                             onClick={close(setUserDropdownOpen)}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                            className="block px-4 py-2 text-sm text-gray-700 transition-colors duration-200 hover:bg-gray-50"
                         >
                             {href.replace("/", "").charAt(0).toUpperCase() +
                                 href.slice(2)}
@@ -132,7 +132,7 @@ export default function GuestHeader() {
                         method="post"
                         as="button"
                         onClick={close(setUserDropdownOpen)}
-                        className="block w-full px-4 py-2 text-sm text-left text-red-600 hover:bg-red-50 transition-colors duration-200"
+                        className="block w-full px-4 py-2 text-sm text-left text-red-600 transition-colors duration-200 hover:bg-red-50"
                     >
                         Logout
                     </Link>
@@ -158,7 +158,7 @@ export default function GuestHeader() {
                         <span className="text-xl font-bold text-text">PBP</span>
                     </Link>
 
-                    <nav className="hidden md:flex space-x-8 items-center">
+                    <nav className="items-center hidden space-x-8 md:flex">
                         {renderLinks()}
                     </nav>
 
@@ -169,7 +169,7 @@ export default function GuestHeader() {
                     <div className="md:hidden">
                         <button
                             onClick={toggle(setMobileMenuOpen)}
-                            className="text-text hover:text-primary transition-colors duration-200"
+                            className="transition-colors duration-200 text-text hover:text-primary"
                         >
                             <svg
                                 className="w-6 h-6"
@@ -193,7 +193,7 @@ export default function GuestHeader() {
                 </div>
 
                 {mobileMenuOpen && (
-                    <div className="md:hidden border-t border-gray-200">
+                    <div className="border-t border-gray-200 md:hidden">
                         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                             {renderLinks(true, close(setMobileMenuOpen))}
                             <div className="pt-4 pb-2 border-t border-gray-200">
@@ -209,7 +209,7 @@ export default function GuestHeader() {
                                         <Link
                                             href="/register"
                                             onClick={close(setMobileMenuOpen)}
-                                            className="block px-3 py-2 mt-2 text-center font-medium text-white rounded-md bg-primary hover:bg-primary"
+                                            className="block px-3 py-2 mt-2 font-medium text-center text-white rounded-md bg-primary hover:bg-primary"
                                         >
                                             Start
                                         </Link>

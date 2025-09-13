@@ -47,6 +47,11 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::resource('bookings', BookingController::class);
+    Route::prefix('bookings')->name('bookings.')->group(function () {
+        Route::post('{booking}/confirm', [BookingController::class, 'confirm'])->name('confirm');
+        Route::post('{booking}/reject', [BookingController::class, 'reject'])->name('reject');
+        Route::post('{booking}/cancel', [BookingController::class, 'cancel'])->name('cancel');
+    });
 
 });
 

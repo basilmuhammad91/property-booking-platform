@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { usePage, router } from "@inertiajs/react";
 import AppLayout from "@/Layouts/AppLayout";
 import { useToast } from "@/Components/ToastProvider";
+import useAuth from "@/hooks/useAuth";
 
 export default function Show() {
     let { property, availability } = usePage().props;
+    const user = useAuth();
     property = property?.data;
 
     const [selectedDates, setSelectedDates] = useState({
@@ -17,6 +19,8 @@ export default function Show() {
     const [totalNights, setTotalNights] = useState(0);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const { addToast } = useToast();
+
+    console.log("user...", user)
 
     const msPerDay = 1000 * 60 * 60 * 24;
 
@@ -124,6 +128,11 @@ export default function Show() {
 
     const handleBooking = () => {
         if (!selectedDates.checkIn || !selectedDates.checkOut) return;
+
+        if(!user) {
+            addToast("You must be logged in to make a booking.", "error");
+            return;
+        }
 
         router.post(
             "/bookings",

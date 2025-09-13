@@ -8,8 +8,8 @@ use App\Models\Booking;
 use App\Models\Property;
 use App\Services\BookingService;
 use App\Exceptions\BookingException;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class BookingController extends Controller
 {
@@ -20,9 +20,8 @@ class BookingController extends Controller
         $this->bookingService = $bookingService;
     }
 
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
-        logger(200000000000);
         $user = auth()->user();
 
         if ($user->isAdmin()) {
@@ -37,8 +36,9 @@ class BookingController extends Controller
             );
         }
 
-        return response()->json([
-            'data' => BookingResource::collection($bookings),
+        return Inertia::render('Bookings/Index', [
+            'bookings' => BookingResource::collection($bookings),
+            'filters' => $request->only(['status', 'property_id', 'user_id', 'start_date', 'end_date']),
             'meta' => [
                 'current_page' => $bookings->currentPage(),
                 'last_page' => $bookings->lastPage(),
@@ -50,8 +50,6 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        logger("storing booking...");
-
         try {
             $validated = $request->validate([
                 'property_id' => ['required', 'exists:properties,id'],
@@ -65,70 +63,55 @@ class BookingController extends Controller
                 $validated
             );
 
-            return redirect()->back()->with('success', 'Booking created successfully');
+            return redirect()->route('bookings.index')->with('success', 'Booking created successfully');
         } catch (BookingException $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
-    public function show(Booking $booking): JsonResponse
+    public function show(Booking $booking)
     {
         $this->authorize('view', $booking);
 
-        return response()->json([
-            'data' => new BookingResource($booking->load(['property.city', 'user'])),
+        return Inertia::render('Bookings/Show', [
+            'booking' => new BookingResource($booking->load(['property.city', 'user'])),
         ]);
     }
 
-    public function confirm(Booking $booking): JsonResponse
+    public function confirm(Booking $booking)
     {
         $this->authorize('update', $booking);
 
         try {
             $booking = $this->bookingService->confirmBooking($booking);
 
-            return response()->json([
-                'message' => 'Booking confirmed successfully',
-                'data' => new BookingResource($booking),
-            ]);
+            return redirect()->route('bookings.index')->with('success', 'Booking confirmed successfully');
         } catch (BookingException $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-            ], 422);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
-    public function reject(Booking $booking): JsonResponse
+    public function reject(Booking $booking)
     {
         $this->authorize('update', $booking);
 
         try {
             $booking = $this->bookingService->rejectBooking($booking);
 
-            return response()->json([
-                'message' => 'Booking rejected successfully',
-                'data' => new BookingResource($booking),
-            ]);
+            return redirect()->route('bookings.index')->with('success', 'Booking rejected successfully');
         } catch (BookingException $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-            ], 422);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
-    public function cancel(Booking $booking): JsonResponse
+    public function cancel(Booking $booking)
     {
         try {
             $booking = $this->bookingService->cancelBooking($booking, auth()->user());
 
-            return response()->json([
-                'message' => 'Booking cancelled successfully',
-                'data' => new BookingResource($booking),
-            ]);
+            return redirect()->route('bookings.index')->with('success', 'Booking cancelled successfully');
         } catch (BookingException $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-            ], 422);
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 }

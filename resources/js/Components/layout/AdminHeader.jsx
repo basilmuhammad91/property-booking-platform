@@ -33,20 +33,20 @@ export default function AirbnbSidebar() {
 
     const navLinks = [
         {
-            href: "/stays",
-            label: "Stays",
+            href: "/admin/properties",
+            label: "Manage Properties",
             icon: (
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L2 7v10c0 5.55 3.84 9 9 9s9-3.45 9-9V7l-8-5z"/>
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
             )
         },
         {
-            href: "/experiences",
-            label: "Experiences",
+            href: "/bookings",
+            label: "Bookings",
             icon: (
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    <path d="M12 2L2 7v10c0 5.55 3.84 9 9 9s9-3.45 9-9V7l-8-5z"/>
                 </svg>
             )
         },
@@ -94,7 +94,7 @@ export default function AirbnbSidebar() {
 
     return (
         <>
-            <div className="md:hidden p-4 flex justify-between items-center border-b bg-white shadow-sm">
+            <div className="flex items-center justify-between p-4 bg-white border-b shadow-sm md:hidden">
                 <button
                     onClick={toggle(setSidebarOpen)}
                     className="text-gray-700 hover:text-[#FF385C] transition-colors duration-200"
@@ -119,7 +119,7 @@ export default function AirbnbSidebar() {
                 </button>
                 <div className="flex items-center space-x-2">
                     <div className="w-8 h-8 bg-gradient-to-r from-[#FF385C] to-[#E31C5F] rounded-lg flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">A</span>
+                        <span className="text-sm font-bold text-white">A</span>
                     </div>
                     <span className="text-xl font-bold bg-gradient-to-r from-[#FF385C] to-[#E31C5F] bg-clip-text text-transparent">
                         PBP
@@ -137,16 +137,16 @@ export default function AirbnbSidebar() {
                 <div className={`flex items-center h-16 border-b border-gray-200 bg-gradient-to-r from-[#FF385C] to-[#E31C5F] ${isCollapsed ? 'justify-center px-4' : 'justify-between px-6'}`}>
                     {!isCollapsed && (
                         <div className="flex items-center space-x-3">
-                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg">
+                            <div className="flex items-center justify-center w-10 h-10 bg-white shadow-lg rounded-xl">
                                 <span className="text-[#FF385C] font-bold text-lg">P</span>
                             </div>
-                            <span className="font-bold text-2xl text-white">PBP</span>
+                            <span className="text-2xl font-bold text-white">PBP</span>
                         </div>
                     )}
 
                     <button
                         onClick={toggle(setIsCollapsed)}
-                        className="hidden md:flex items-center justify-center w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all duration-200"
+                        className="items-center justify-center hidden w-8 h-8 text-white transition-all duration-200 rounded-lg md:flex bg-white/10 hover:bg-white/20"
                     >
                         <svg
                             className={`w-4 h-4 transition-transform duration-200 ${
@@ -166,15 +166,15 @@ export default function AirbnbSidebar() {
                     </button>
 
                     {isCollapsed && (
-                        <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg">
+                        <div className="flex items-center justify-center w-10 h-10 bg-white shadow-lg rounded-xl">
                             <span className="text-[#FF385C] font-bold text-lg">A</span>
                         </div>
                     )}
                 </div>
 
-                <nav className="p-4 space-y-2 flex-1">{renderLinks(close(setSidebarOpen))}</nav>
+                <nav className="flex-1 p-4 space-y-2">{renderLinks(close(setSidebarOpen))}</nav>
 
-                <div className="border-t border-gray-200 p-4 bg-gray-50">
+                <div className="p-4 border-t border-gray-200 bg-gray-50">
                     {!user ? (
                         <div className="space-y-3">
                             <Link
@@ -212,7 +212,7 @@ export default function AirbnbSidebar() {
                                 </div>
                                 {!isCollapsed && (
                                     <>
-                                        <span className="font-medium flex-1 text-left">{user.name}</span>
+                                        <span className="flex-1 font-medium text-left">{user.name}</span>
                                         <svg
                                             className={`w-4 h-4 transition-transform duration-200 ${
                                                 userDropdownOpen ? "rotate-180" : ""
@@ -232,7 +232,7 @@ export default function AirbnbSidebar() {
                                 )}
                             </button>
                             {userDropdownOpen && !isCollapsed && (
-                                <div className="mt-2 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
+                                <div className="mt-2 overflow-hidden bg-white border border-gray-200 shadow-lg rounded-xl">
                                     {[
                                         { href: "/trips", label: "Your trips", icon: "🧳" },
                                         { href: "/wishlists", label: "Wishlists", icon: "❤️" },
@@ -242,7 +242,7 @@ export default function AirbnbSidebar() {
                                             key={href}
                                             href={href}
                                             onClick={close(setUserDropdownOpen)}
-                                            className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                                            className="flex items-center px-4 py-3 text-sm text-gray-700 transition-colors duration-200 hover:bg-gray-50"
                                         >
                                             <span className="mr-3">{icon}</span>
                                             {label}
@@ -253,7 +253,7 @@ export default function AirbnbSidebar() {
                                         href="/logout"
                                         method="post"
                                         as="button"
-                                        className="flex items-center w-full px-4 py-3 text-sm text-left text-red-600 hover:bg-red-50 transition-colors duration-200"
+                                        className="flex items-center w-full px-4 py-3 text-sm text-left text-red-600 transition-colors duration-200 hover:bg-red-50"
                                     >
                                         <span className="mr-3">🚪</span>
                                         Log out
