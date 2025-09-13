@@ -8,8 +8,9 @@ use App\Http\Requests\PropertyRequest;
 use App\Http\Resources\PropertyResource;
 use App\Models\Property;
 use App\Services\PropertyService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class PropertyController extends Controller
 {
@@ -18,17 +19,19 @@ class PropertyController extends Controller
     public function __construct(PropertyService $propertyService)
     {
         $this->propertyService = $propertyService;
-        $this->middleware('admin');
+        $this->middleware('role:admin');
     }
 
-    public function index(Request $request): JsonResponse
+    public function index(Request $request): Response
     {
+        logger("test property index...");
+
         $properties = $this->propertyService->getAllProperties(
             $request->get('per_page', 10)
-        );
+    );
 
-        return response()->json([
-            'data' => PropertyResource::collection($properties),
+        return Inertia::render('Admin/Properties/Index', [
+            'properties' => PropertyResource::collection($properties),
             'meta' => [
                 'current_page' => $properties->currentPage(),
                 'last_page' => $properties->lastPage(),
@@ -38,52 +41,52 @@ class PropertyController extends Controller
         ]);
     }
 
-    public function store(PropertyRequest $request): JsonResponse
+    public function store(PropertyRequest $request)
     {
         $property = $this->propertyService->createProperty($request->validated());
 
-        return response()->json([
-            'message' => 'Property created successfully',
-            'data' => new PropertyResource($property),
-        ], 201);
+        return redirect()
+            ->route('admin.properties.index')
+            ->with('success', 'Property created successfully');
     }
 
-    public function show(Property $property): JsonResponse
+    public function show(Property $property): Response
     {
-        return response()->json([
-            'data' => new PropertyResource($property->load(['city', 'availability', 'bookings.user'])),
+        $property->load(['city', 'availability', 'bookings.user']);
+
+        return Inertia::render('Admin/Properties/Show', [
+            'property' => new PropertyResource($property),
         ]);
     }
 
-    public function update(PropertyRequest $request, Property $property): JsonResponse
+    public function update(PropertyRequest $request, Property $property)
     {
-        $property = $this->propertyService->updateProperty($property, $request->validated());
+        $this->propertyService->updateProperty($property, $request->validated());
 
-        return response()->json([
-            'message' => 'Property updated successfully',
-            'data' => new PropertyResource($property),
-        ]);
+        return redirect()
+            ->route('admin.properties.index')
+            ->with('success', 'Property updated successfully');
     }
 
-    public function destroy(Property $property): JsonResponse
+    public function destroy(Property $property)
     {
         $this->propertyService->deleteProperty($property);
 
-        return response()->json([
-            'message' => 'Property deleted successfully',
-        ]);
+        return redirect()
+            ->route('admin.properties.index')
+            ->with('success', 'Property deleted successfully');
     }
 
-    public function manageAvailability(AvailabilityRequest $request, Property $property): JsonResponse
+    public function manageAvailability(AvailabilityRequest $request, Property $property)
     {
         $this->propertyService->manageAvailability($property, $request->validated()['availability']);
 
-        return response()->json([
-            'message' => 'Property availability updated successfully',
-        ]);
+        return redirect()
+            ->route('admin.properties.show', $property->id)
+            ->with('success', 'Property availability updated successfully');
     }
 
-    public function getAvailability(Request $request, Property $property): JsonResponse
+    public function getAvailability(Request $request, Property $property): Response
     {
         $availability = $this->propertyService->getAvailabilityForProperty(
             $property,
@@ -91,8 +94,9 @@ class PropertyController extends Controller
             $request->get('end_date')
         );
 
-        return response()->json([
-            'data' => $availability,
+        return Inertia::render('Admin/Properties/Availability', [
+            'property' => new PropertyResource($property),
+            'availability' => $availability,
         ]);
     }
 }

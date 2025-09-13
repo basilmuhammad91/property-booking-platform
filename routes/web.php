@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
 
     // Admin Routes
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/properties', [AdminPropertyController::class, 'index'])->name('properties.index');
+        Route::resource('properties', AdminPropertyController::class);
     });
 
     Route::resource('bookings', BookingController::class);
