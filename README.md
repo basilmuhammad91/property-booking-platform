@@ -30,5 +30,18 @@ Follow these steps to get your local development environment up and running:
 1. **Clone the repository**
 
 ```bash
-git clone <repository-url>
+git clone <https://github.com/basilmuhammad91/property-booking-platform.git>
 cd <repository-folder>
+
+
+composer install
+npm install
+npm run dev
+
+cp .env.example .env
+
+php artisan key:generate
+
+php artisan migrate --seed
+
+php artisan serve
