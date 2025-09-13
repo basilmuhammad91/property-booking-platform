@@ -9,7 +9,6 @@ export default function Index() {
     const { addToast } = useToast();
     const { user } = useAuth() ?? {};
 
-
     const handleAction = (id, action) => {
         let url = `/bookings/${id}/${action}`;
 
@@ -21,7 +20,10 @@ export default function Index() {
                     addToast(`Booking ${action}ed successfully!`, "success");
                 },
                 onError: (errors) => {
-                    addToast(errors?.message || "Something went wrong!", "error");
+                    addToast(
+                        errors?.message || "Something went wrong!",
+                        "error"
+                    );
                 },
             }
         );
@@ -46,6 +48,18 @@ export default function Index() {
                             <p className="mb-1 text-sm text-slate-600">
                                 {booking.property?.city?.name}
                             </p>
+
+                            {/* Show booked user name only if admin */}
+                            {usePage().props?.auth?.user?.is_admin &&
+                                booking?.user?.name && (
+                                    <p className="mb-1 text-sm text-slate-700">
+                                        Booked by:{" "}
+                                        <span className="font-medium">
+                                            {booking.user.name}
+                                        </span>
+                                    </p>
+                                )}
+
                             <p className="mb-1 text-sm text-slate-500">
                                 Check-in:{" "}
                                 <span className="font-medium">
@@ -134,7 +148,9 @@ export default function Index() {
                         <button
                             key={idx}
                             onClick={() =>
-                                router.get(route("bookings.index", { page: idx + 1 }))
+                                router.get(
+                                    route("bookings.index", { page: idx + 1 })
+                                )
                             }
                             className={`px-4 py-2 rounded-lg ${
                                 meta.current_page === idx + 1
