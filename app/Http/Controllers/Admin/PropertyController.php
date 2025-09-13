@@ -11,6 +11,7 @@ use App\Services\PropertyService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\City;
 
 class PropertyController extends Controller
 {
@@ -28,7 +29,9 @@ class PropertyController extends Controller
 
         $properties = $this->propertyService->getAllProperties(
             $request->get('per_page', 10)
-    );
+        );
+
+            $cities = City::select('id', 'name')->get();
 
         return Inertia::render('Admin/Properties/Index', [
             'properties' => PropertyResource::collection($properties),
@@ -37,6 +40,7 @@ class PropertyController extends Controller
                 'last_page' => $properties->lastPage(),
                 'per_page' => $properties->perPage(),
                 'total' => $properties->total(),
+                'cities' => $cities,
             ],
         ]);
     }
