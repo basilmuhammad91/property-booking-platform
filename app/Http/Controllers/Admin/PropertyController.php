@@ -76,9 +76,45 @@ class PropertyController extends Controller
         ]);
     }
 
-    public function update(PropertyRequest $request, Property $property)
+    public function update(Request $request, Property $property)
     {
-        $this->propertyService->updateProperty($property, $request->validated());
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'price_per_night' => ['required', 'numeric', 'min:1'],
+            'city_id' => ['required', 'exists:cities,id'],
+            'images' => ['nullable', 'array', 'max:5'],
+            'images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'existing_images' => ['nullable', 'array'],
+            'existing_images.*' => ['string'],
+            'amenities' => ['nullable', 'array'],
+            'amenities.*' => ['string', 'max:50'],
+            'is_active' => ['boolean'],
+        ]);
+
+        // Handle existing images
+        $existingImages = $validated['existing_images'] ?? [];
+
+        // Handle new image uploads
+        $newImagePaths = [];
+        if (isset($validated['images'])) {
+            foreach ($validated['images'] as $image) {
+                $path = $image->store('properties', 'public');
+                $newImagePaths[] = '/storage/' . $path;
+            }
+        }
+
+        // Combine existing and new images
+        $allImages = array_merge($existingImages, $newImagePaths);
+
+        $validated['images'] = json_encode($allImages);
+        $validated['amenities'] = json_encode($validated['amenities'] ?? []);
+        $validated['is_active'] = $validated['is_active'] ?? $property->is_active;
+
+        // Remove the arrays we don't want to save directly
+        unset($validated['existing_images']);
+
+        $property->update($validated);
 
         return redirect()
             ->route('admin.properties.index')
