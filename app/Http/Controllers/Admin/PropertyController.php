@@ -31,7 +31,7 @@ class PropertyController extends Controller
             $request->get('per_page', 10)
         );
 
-            $cities = City::select('id', 'name')->get();
+        $cities = City::select('id', 'name')->get();
 
         return Inertia::render('Admin/Properties/Index', [
             'properties' => PropertyResource::collection($properties),
@@ -40,19 +40,32 @@ class PropertyController extends Controller
                 'last_page' => $properties->lastPage(),
                 'per_page' => $properties->perPage(),
                 'total' => $properties->total(),
-                'cities' => $cities,
             ],
+            'cities' => $cities,
         ]);
     }
 
-    public function store(PropertyRequest $request)
+    public function store(Request $request)
     {
-        $property = $this->propertyService->createProperty($request->validated());
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'price_per_night' => ['required', 'numeric', 'min:1'],
+            'city_id' => ['required', 'exists:cities,id'],
+            'images' => ['nullable', 'array', 'max:5'], // max 5 images
+            'images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'], // 2MB each
+            'amenities' => ['nullable', 'array'],
+            'amenities.*' => ['string', 'max:50'],
+            'is_active' => ['boolean'],
+        ]);
+
+        $property = $this->propertyService->createProperty($validated);
 
         return redirect()
             ->route('admin.properties.index')
             ->with('success', 'Property created successfully');
     }
+
 
     public function show(Property $property): Response
     {

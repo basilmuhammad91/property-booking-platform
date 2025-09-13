@@ -9,6 +9,7 @@ export default function Index() {
   const { properties, cities } = usePage().props;
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  console.log('cities...', cities)
 
   return (
     <div className="mx-auto max-w-7xl">

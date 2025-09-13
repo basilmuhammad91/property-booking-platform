@@ -79,7 +79,7 @@ export default function CreatePropertyModal({ show, onClose, cities }) {
                         required
                     >
                         <option value="">Select City</option>
-                        {cities.map((city) => (
+                        {cities?.map((city) => (
                             <option key={city.id} value={city.id}>
                                 {city.name}
                             </option>
