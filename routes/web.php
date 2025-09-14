@@ -45,10 +45,10 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('properties', AdminPropertyController::class);
         Route::get('properties/{property}/availability', [AdminPropertyController::class, 'getAvailability'])
-            ->name('admin.properties.availability');
+            ->name('properties.availability');
 
         Route::post('properties/{property}/manage-availability', [AdminPropertyController::class, 'manageAvailability'])
-            ->name('admin.properties.manage-availability');
+            ->name('properties.manage-availability');
     });
 
     Route::resource('bookings', BookingController::class);
